@@ -1,5 +1,6 @@
 // Author: Armit 
-// UpdateTime: 2022/09/24 
+// Create Time: 2022/09/24 
+// Update Time: 2022/09/26 
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,19 +8,19 @@
 #include <string.h>
 #include <time.h>
 
-// solver target
+/* solver target */
 int m = 0;       // 1~12
 int d = 0;       // 1~31
 int w = 0;       // 1~7
 
-// debug or perfcount
+/* debug or perfcount */
 char* bin;
 bool debug = false;   // whether show genegrated piece variations
 int B_WIDTH = 8;      // block width in display
-time_t ts_start;      // ts from DFS() start
+time_t ts_start;      // ts from dfs() start
 time_t ts_last;       // ts from last solution found
 
-// readable name mapping
+/* readable name mapping */
 char* MN[] = { "", 
   "一月", "二月", "三月", "四月", "五月", "六月",
   "七月", "八月", "九月", "十月", "十一月", "十二月",
@@ -34,12 +35,12 @@ char* WN[] = { "",
   "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日",
 };
 
-// board definition
+/* board definition */
 const int nrow = 8;
 const int ncol = 7;
 typedef int board_t[8][7];      // C even NOT support const-var as array-length :(
 enum BoardType { M, D, W, _ };
-board_t board_type = {
+const board_t board_type = {
   { M, M, M, M, M, M, _ },
   { M, M, M, M, M, M, _ },
   { D, D, D, D, D, D, D },
@@ -49,7 +50,7 @@ board_t board_type = {
   { D, D, D, W, W, W, W },
   { _, _, _, _, W, W, W },
 };
-board_t board_value = {
+const board_t board_value = {
   {  1,  2,  3,  4,  5,  6,  0 },
   {  7,  8,  9, 10, 11, 12,  0 },
   {  1,  2,  3,  4,  5,  6,  7 },
@@ -62,7 +63,7 @@ board_t board_value = {
 board_t mask = { 0 };           // aka. current partial solution; value v indicates the v-th piece is placed (index from 1), 0 for blank, -1 for invalid
 board_t target = { 0 };         // 1 for masked, 0 for blank, -1 for invalid
 
-// piece definition
+/* piece definition */
 const int npieces = 10;
 typedef struct _piece_t {
   int row, col;
@@ -111,7 +112,7 @@ bool p9[] = {
   0, 1, 0,
   1, 1, 0,
 };
-piece_t proto[] = {             // piece prototypes
+piece_t proto[] = {         // piece prototypes
   {1, 4, p0, NULL},
   {2, 4, p1, NULL},
   {2, 4, p2, NULL},
@@ -125,7 +126,7 @@ piece_t proto[] = {             // piece prototypes
 };
 piece_t* pieces[10] = { NULL };   // piece variations (saved in a linked-forward-star data structure)
 
-// util functions
+/* util functions */
 static inline bool p_get(piece_t *p, int x, int y) {
   return p->block[p->col * x + y];
 }
@@ -212,7 +213,7 @@ static inline int b_width(int x, int y) {
   int w = 0;
   int v = board_value[x][y];
   switch (board_type[x][y]) {
-    case M: w = _mbstrlen(MN[v]) / 3 * 2; break;
+    case M: w = _mbstrlen(MN[v]) / 3 * 2; break;    // len(hanzi)==3
     case D: w = _mbstrlen(DN[v]) - 1    ; break;
     case W: w = _mbstrlen(WN[v]) / 3 * 2; break;
   }
@@ -284,6 +285,12 @@ static inline void print_pieces() {
     printf("<< piece %d has %d variations\n", k, cnt);
   }
 }
+static inline void help() {
+  printf("Usage: \n");
+  printf("   %s\n", bin);
+  printf("   %s <month> <date> <weekday>\n", bin);
+  exit(-1);
+}
 
 void dfs(int k) {
   if (k == npieces) {
@@ -293,6 +300,19 @@ void dfs(int k) {
     print_solution();
     return;
   }
+  
+  // prune if found an isolated island
+  for (int i = 0; i < nrow; i++)
+    for (int j = 0; j < ncol; j++)
+      if (mask[i][j] == 0) {              // the center is blank
+        if (target[i][j] == 0) continue;  // if target is right blank, then it's ok
+
+        bool N = i - 1  < 0    || mask[i - 1][j] > 0;
+        bool S = i + 1 >= nrow || mask[i + 1][j] > 0;
+        bool W = j - 1  < 0    || mask[i][j - 1] > 0;
+        bool E = j + 1 >= ncol || mask[i][j + 1] > 0;
+        if (N && S && W && E) return;     // four neighbors are filled
+      }
 
   piece_t* p = pieces[k];   // try all variations
   while (p) {
@@ -307,14 +327,7 @@ void dfs(int k) {
   }
 }
 
-static inline void help() {
-  printf("Usage: \n");
-  printf("   %s\n", bin);
-  printf("   %s <month> <date> <weekday>\n", bin);
-  exit(-1);
-}
-
-// main entry
+/* main entry */
 int main(int argc, char* argv[])  {
   // parse args
   bin = argv[0];

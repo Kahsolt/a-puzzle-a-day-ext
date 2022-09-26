@@ -1,12 +1,15 @@
 # a-puzzle-a-day-ext
 
-    A solver for the version of A-Puzzle-A-Day game extened with day-of-the-week
+    A solver for the version of A-Puzzle-A-Day game extended with day-of-the-week
 
 ----
 
-**2022年8月12日星期五**，友人A给我买个了拼图解谜游戏。它是 DragonFlord 游戏原版的增强版，长得像这样：
+![gui.png](./img/gui.png)
 
-![puzzle](./img/puzzle.jpg)
+
+话说 **2022年8月12日星期五**，友人A给我买个了拼图解谜游戏。它是 DragonFlord 游戏原版的增强版，长得像这样：
+
+![puzzle](./img/puzzle.png)
 
 
 我们一起拼了一晚上，嗯是没把那一天的日期拼出来。
@@ -31,30 +34,31 @@ solver.exe
 solver.exe 5 27 3
 ```
 
-会不断地枚举所有可行解：
+会不断地枚举所有可行解……这确实太多了🤔，但我人手怎么就碰不了运气呢？
 
 ![solver.png](./img/solver.png)
 
-
-js版: （还没做完，你先别急——
+js版: 
 
 ```powershell
-// 可以在命令行运行
+// 可以在命令行运行，感觉上比c慢一些
 node.exe solver.js
 node.exe solver.js 11 45 14
 
-// 也可以在浏览器里查看
-index.html
+// 也可以在浏览器里查看，但是很慢很慢（甚至需要一分钟）；感觉完全可以用作浏览器性能测试
+firefox.exe index.html
 ```
 
+已经部署在了 [https://kahsolt.pythonanywhere.com/a-puzzle-a-day](https://kahsolt.pythonanywhere.com/a-puzzle-a-day) 上，可以直接访问（但真的好慢啊(lll￢ω￢)……
 
-#### solvers for the original [DragonFlord's version](https://www.dragonfjord.com/product/a-puzzle-a-day/)
 
-- HTML version:
+#### Ref: solvers for the original [DragonFlord's version](https://www.dragonfjord.com/product/a-puzzle-a-day/)
+
+- HTML:
   - https://github.com/robertjajajja/a-puzzle-a-day, [Try it Online](https://robertjajajja.github.io/a-puzzle-a-day/)
   - https://github.com/x6ud/a-puzzle-a-day
-- Go version: https://github.com/gonejack/a-puzzle-a-day
-- Android ver: https://github.com/wzy820715/A_Puzzle_A_Day
+- Go: https://github.com/gonejack/a-puzzle-a-day
+- Android: https://github.com/wzy820715/A_Puzzle_A_Day
 
 ----
 
