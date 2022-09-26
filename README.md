@@ -4,9 +4,6 @@
 
 ----
 
-![gui.png](./img/gui.png)
-
-
 话说 **2022年8月12日星期五**，友人A给我买个了拼图解谜游戏。它是 DragonFlord 游戏原版的增强版，长得像这样：
 
 ![puzzle](./img/puzzle.png)
@@ -50,6 +47,8 @@ firefox.exe index.html
 ```
 
 已经部署在了 [https://kahsolt.pythonanywhere.com/a-puzzle-a-day](https://kahsolt.pythonanywhere.com/a-puzzle-a-day) 上，可以直接访问（但真的好慢啊(lll￢ω￢)……
+
+![gui.png](./img/gui.png)
 
 
 #### Ref: solvers for the original [DragonFlord's version](https://www.dragonfjord.com/product/a-puzzle-a-day/)
