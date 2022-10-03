@@ -46,7 +46,7 @@ node.exe solver.js 11 45 14
 firefox.exe index.html
 ```
 
-已经部署在了 [https://kahsolt.pythonanywhere.com/a-puzzle-a-day](https://kahsolt.pythonanywhere.com/a-puzzle-a-day) 上，可以直接访问（但真的好慢啊(lll￢ω￢)……
+已经部署在了 [https://kahsolt.pythonanywhere.com/a-puzzle-a-day-ext](https://kahsolt.pythonanywhere.com/a-puzzle-a-day-ext) 上，可以直接访问（但还没做响应式Web，并且真的好慢啊(lll￢ω￢)……
 
 ![gui.png](./img/gui.png)
 

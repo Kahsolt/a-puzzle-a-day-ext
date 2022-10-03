@@ -97,7 +97,7 @@
     y = now.getFullYear();
     m = now.getMonth() + 1;
     d = now.getDate();
-    date_str = y + '-' + (m < 10 ? '0': '') + m + (d < 10 ? '0': '') + '-' + d;
+    date_str = y + '-' + (m < 10 ? '0': '') + m + '-' + (d < 10 ? '0': '') + d;
     
     document.getElementById('input').value = date_str;
   }
